@@ -1,0 +1,85 @@
+USE Bakery;
+
+USE Bakery;
+
+CREATE TABLE Ordertable(
+    ORDER_ID INT PRIMARY KEY,
+    CUSTOMER_NAME VARCHAR(50),
+    QUANTITY INT,
+    TOTAL_PRICE DECIMAL(10,2),
+    ORDER_STATUS VARCHAR(25)
+);
+
+CREATE TABLE ORDERDETAIL(
+     ORDERDETAIL_ID INT PRIMARY KEY,
+     ORDER_ID INT,
+     ProductID INT,
+     PRODUCT_QUANTITY INT,
+     UNIT_PRICE DECIMAL(10,2),
+     FOREIGN KEY(ORDER_ID) REFERENCES Ordertable(ORDER_ID),
+     FOREIGN KEY(ProductID) REFERENCES Product(ProductID)
+);
+INSERT INTO Ordertable VALUES 
+(1,"Kamali",2,800,"Pending"),
+(2,"Dharshini",1,500,"Shipped"),
+(3,"Hema",3,1200,"Pending"),
+(4,"Harini",2,900,"Shipped"),
+(5,"Pooja",1,450,"Pending"),
+(6,"Kaviya",4,1600,"Shipped"),
+(7,"Raji",2,700,"Pending"),
+(8,"Subu",3,1350,"Shipped"),
+(9,"Abi",1,600,"Pending"),
+(10,"Keerthi",2,1000,"Shipped");
+
+SELECT * FROM Ordertable;
+
+INSERT INTO ORDERDETAIL VALUES
+(101,1,105,2,400),
+(102,2,110,1,500),
+(103,3,115,3,400),
+(104,4,120,2,450),
+(105,5,125,1,450),
+(106,6,129,4,400),
+(107,7,108,2,350),
+(108,8,112,3,450),
+(109,9,118,1,600),
+(110,10,122,2,500);
+
+SELECT * FROM ORDERDETAIL;
+
+UPDATE Ordertable
+SET ORDER_STATUS = 'Shipped'
+WHERE ORDER_ID = 1;
+
+
+UPDATE Ordertable
+SET ORDER_STATUS = 'Delivered'
+WHERE ORDER_ID = 2;
+
+
+SELECT * FROM Ordertable
+ORDER BY CUSTOMER_NAME, ORDER_ID;
+
+
+SELECT * FROM Ordertable
+WHERE CUSTOMER_NAME = 'Kamali'
+ORDER BY ORDER_ID;
+
+
+SELECT * FROM Ordertable
+WHERE ORDER_STATUS = 'Pending';
+
+
+SELECT * FROM Ordertable
+WHERE ORDER_STATUS = 'Shipped';
+
+
+SELECT * FROM Ordertable
+WHERE ORDER_STATUS = 'Delivered';
+
+SELECT COUNT(*) FROM Ordertable
+GROUP BY CUSTOMER_NAME;
+
+SELECT  SUM(TOTAL_PRICE) FROM Ordertable
+GROUP BY CUSTOMER_NAME;
+
