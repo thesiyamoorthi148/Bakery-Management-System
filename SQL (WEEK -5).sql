@@ -1,0 +1,71 @@
+USE Bakery;
+
+CREATE TABLE Payment(
+   PaymentID INT PRIMARY KEY,
+   ORDER_ID INT,
+   PaymentMode VARCHAR(20),
+   PaymentDate DATE,
+   PaymentAmount DECIMAL(10,2),
+   PaymentStatus VARCHAR(20),
+   
+   FOREIGN KEY(ORDER_ID)
+   REFERENCES Ordertable(ORDER_ID)
+);
+
+INSERT INTO Payment VALUES
+(601,1,"UPI","2026-09-01",800,"SUCCESS"),
+(602,2,"CARD","2026-09-01",500,"SUCCESS"),
+(603,3,"CASH","2026-09-02",450,"FAILED"),
+(604,4,"UPI","2026-09-02",1200,"SUCCESS"),
+(605,5,"CARD","2026-09-03",950,"FAILED"),
+(606,6,"CASH","2026-09-05",1600,"SUCCESS"),
+(607,7,"UPI","2026-09-04",700,"FAILED"),
+(608,8,"CARD","2026-09-03",1350,"SUCCESS"),
+(609,9,"CASH","2026-09-05",600,"SUCCESS"),
+(610,10,"UPI","2026-09-06",1000,"FAILED"),
+(611,1,"CARD","2026-09-06",850,"SUCCESS"),
+(612,10,"CASH","2026-09-07",600,"FAILED"),
+(613,2,"UPI","2026-09-07",950,"SUCCESS"),
+(614,4,"CARD","2026-09-04",1600,"SUCCESS");
+
+
+SELECT*FROM Payment;
+
+UPDATE Payment
+SET  PaymentStatus= "SUCCESS"
+WHERE PaymentID= 603;
+
+SELECT*FROM Payment
+WHERE PaymentID= 603;
+
+UPDATE Payment
+SET  PaymentStatus= "FAILED"
+WHERE PaymentID= 602;
+
+SELECT*FROM Payment
+WHERE PaymentID= 602;
+
+SELECT*FROM Payment
+WHERE PaymentStatus="SUCCESS";
+
+SELECT*FROM Payment
+WHERE PaymentStatus="FAILED" ;
+
+SELECT*FROM Payment
+WHERE PaymentMode= "UPI";
+
+SELECT*FROM Payment
+WHERE PaymentMode= "CARD";
+
+SELECT*FROM Payment
+WHERE PaymentMode= "CASH";
+
+SELECT PaymentMode,COUNT(*)
+FROM Payment
+GROUP BY PaymentMode;
+
+SELECT PaymentMode,
+SUM(PaymentAmount)
+FROM Payment 
+WHERE PaymentStatus="SUCCESS"
+GROUP BY PaymentMode;
